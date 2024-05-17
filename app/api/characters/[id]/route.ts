@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export const GET = async (req: Request) => {
   try {
     const id = req.url.split("characters/")[1];
-    const character = getCharacterById(id);
+    const character = await getCharacterById(id);
     if (!character) {
       return NextResponse.json(
         { message: "Error: Character not found." },
@@ -29,7 +29,7 @@ export const PUT = async (req: Request) => {
   try {
     const { name, birthday, species, house, wand, patronus, boggart } = await req.json();
     const id = req.url.split("characters/")[1];
-    updateCharacter( id, name, birthday, species, house, wand, patronus, boggart);
+    await updateCharacter( id, name, birthday, species, house, wand, patronus, boggart);
     return NextResponse.json(
       { message: "Success"},
       { status: 200 }
@@ -46,7 +46,7 @@ export const PUT = async (req: Request) => {
 export const DELETE = async (req: Request) => {
   try {
     const id = req.url.split("characters/")[1];
-    deleteCharacter(id);
+    await deleteCharacter(id);
     return NextResponse.json(
       { message: "Success"},
       { status: 200 }
